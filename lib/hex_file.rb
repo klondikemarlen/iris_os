@@ -3,7 +3,11 @@
 require 'pry'
 
 class HexFile
-  attr_reader :last_read_size
+  class << self
+    attr_reader :last_read_size
+  end
+
+  @last_read_size = nil
 
   def self.read(path)
     data = ''

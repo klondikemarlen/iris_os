@@ -11,7 +11,6 @@ end
 
 data = HexFile.read boot_sector
 puts data
-puts "File size: #{data.length / 2}"
 puts "File size: #{HexFile.last_read_size}"
 
 puts 'Now run bin/write_load_boot_sector.rb'
