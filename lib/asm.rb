@@ -7,36 +7,33 @@ require_relative 'hex_file'
 # and make it update the cursor position.
 
 class Asm
-  attr_reader :buffer, :symbols
+  attr_reader :instructions, :symbols
 
   def initialize
-    @buffer = [] # out_file?
     @symbols = {}
+    @instructions = []
   end
 
-  def build(path, &block)
+  def build(&block)
     instance_eval(&block)
-    HexFile.write path do
-      compressed_buffer
-    end
+  end
+
+  # TODO: make the buffer class do this automagically.
+  def buffer
+    instructions.join
   end
 
   #######
   private
   #######
 
-  # TODO: make the buffer class do this automagically.
-  def compressed_buffer
-    buffer.join
-  end
-
   # position of last instruction in decimal?
   def cursor
-    compressed_buffer.length / 2
+    buffer.length / 2
   end
 
   def dw(value)
-    @buffer << safe(value)
+    @instructions << safe(value)
   end
 
   def label(label, &block)
@@ -45,11 +42,11 @@ class Asm
   end
 
   def jmp(label)
-    @buffer << safe(AsmCodes::JMP) << symbols[label]
+    @instructions << safe(AsmCodes::JMP) << symbols[label]
   end
 
   def pad(size, char)
-    @buffer << safe(char) * (size - compressed_buffer.length / 2)
+    @instructions << safe(char) * (size - buffer.length / 2)
   end
 
   def safe(value)
