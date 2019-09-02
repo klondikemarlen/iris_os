@@ -3,7 +3,7 @@
 require 'hex_file'
 
 describe HexFile do
-  let(:test_file) { 'tmp/hex_writer_test' }
+  let(:test_file) { 'tmp/hex_writer_test.bin' }
   let(:hexdump) { `hexdump #{test_file}` }
 
   describe '.write' do

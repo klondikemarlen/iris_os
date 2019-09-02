@@ -1,2 +1,6 @@
 Style/Documentation:
   Enabled: false
+Lint/Debugger:
+  Enabled: false
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: false
