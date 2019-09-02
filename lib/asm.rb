@@ -16,9 +16,13 @@ class Asm
 
   def build(&block)
     instance_eval(&block)
+    self
   end
 
-  # TODO: make the buffer class do this automagically.
+  def self.build(&block)
+    new.build(&block)
+  end
+
   def buffer
     instructions.join
   end
