@@ -14,5 +14,5 @@ To test install qemu
 3. `bin/write_load_boot_sector.rb`
 
 # Resources
-https://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
-http://mikeos.sourceforge.net/write-your-own-os.html
+- https://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
+- http://mikeos.sourceforge.net/write-your-own-os.html
