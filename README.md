@@ -5,3 +5,10 @@ An attempt a writing an OS primarily in Ruby with some bash scripting and Debian
 # Install
 To test install qemu
 `sudo apt-get install qemu-kvm qemu`
+
+# Usage
+1. `chmod +x bin/*`
+2. `bin/build_boot_sector.rb`
+
+## WARNING this command could be very destructive!!!
+3. `bin/write_load_boot_sector.rb`
