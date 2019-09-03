@@ -14,7 +14,7 @@ describe Asm do
           end
         end
 
-        expect(asm.buffer).to eq 'e9 fd ff 00'.delete ' '
+        expect(asm.to_s).to eq 'e9 fd ff 00'
       end
 
       it 'can understand pad' do
@@ -28,16 +28,12 @@ describe Asm do
         expect(asm.buffer.length).to eq 510 * 2
       end
 
-      it 'can understand dw' do
+      it '#dw' do
         asm.build do
-          label :loop do
-            jmp :loop
-          end
-          pad 510, 0
           dw 0xaa55
         end
 
-        expect(asm.buffer[1020..1024]).to eq 'aa55'
+        expect(asm.to_s).to eq '55 aa'
       end
     end
   end

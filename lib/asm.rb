@@ -44,7 +44,8 @@ class Asm
   end
 
   def dw(value)
-    @instructions << to_hex(value)
+    hex = to_hex(value)
+    @instructions << "#{hex[2..4]}#{hex[0..1]}"
   end
 
   def label(label, &block)
