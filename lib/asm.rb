@@ -3,6 +3,7 @@
 require_relative 'asm_codes'
 require_relative 'hexable'
 require_relative 'hex_file'
+require_relative 'interrupts'
 require_relative 'registers'
 
 # TODO: make buffer squish spaces out
@@ -10,6 +11,7 @@ require_relative 'registers'
 
 class Asm
   include Hexable
+  include Interrupts
   include Registers
 
   attr_reader :instructions, :symbols
