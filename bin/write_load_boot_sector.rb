@@ -2,17 +2,16 @@
 # frozen_string_literal: true
 
 # requires drive to be partitioned as fat32 in gparted with boot flag set
+boot_sector = 'dist/boot_sect.bin'
 drive = '/dev/sdc'
 
-# write to drive
+# Write boot sector to drive
 puts 'Write command, please verify drive.'
 `sudo dd if=#{boot_sector} of=#{drive} bs=512 count=1`
 
-# Write boot sector
-`sudo dd if=dist/boot_sect.bin of=/dev/sdc1 bs=512`
-
 # boot after install
-`sudo qemu-system-x86_64 -hdb /dev/sdc`
+# `sudo qemu-system-x86_64 -hdb #{drive}`
+`sudo qemu-system-i386 -hdb #{drive}`
 
 # possibly interesting
 # qemu-system-i386 -drive format=raw,file=dist/os.img
