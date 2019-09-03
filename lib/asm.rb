@@ -3,12 +3,15 @@
 require_relative 'asm_codes'
 require_relative 'hexable'
 require_relative 'hex_file'
+require_relative 'registers'
 
 # TODO: make buffer squish spaces out
 # and make it update the cursor position.
 
 class Asm
   include Hexable
+  include Registers
+
   attr_reader :instructions, :symbols
 
   def initialize
