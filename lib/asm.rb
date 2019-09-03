@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require_relative 'asm_codes'
+require_relative 'hexable'
 require_relative 'hex_file'
 
 # TODO: make buffer squish spaces out
 # and make it update the cursor position.
 
 class Asm
+  include Hexable
   attr_reader :instructions, :symbols
 
   def initialize
@@ -37,28 +39,19 @@ class Asm
   end
 
   def dw(value)
-    @instructions << safe(value)
+    @instructions << to_hex(value)
   end
 
   def label(label, &block)
-    symbols[label] = safe(cursor)
+    symbols[label] = to_hex(cursor)
     instance_eval(&block)
   end
 
   def jmp(label)
-    @instructions << safe(AsmCodes::JMP) << symbols[label]
+    @instructions << to_hex(AsmCodes::JMP) << symbols[label]
   end
 
   def pad(size, char)
-    @instructions << safe(char) * (size - buffer.length / 2)
-  end
-
-  def safe(value)
-    case value
-    when String
-      value.delete(' ').rjust(2, '0')
-    when Integer
-      value.to_s(16).rjust(2, '0')
-    end
+    @instructions << to_hex(char) * (size - buffer.length / 2)
   end
 end
