@@ -34,6 +34,32 @@ class Asm
     instructions.join
   end
 
+  def to_s
+    hide_output = false
+    first = true
+    out = buffer.scan(/.{1,32}/).map do |line|
+      next if line.match(/^0*$/) && hide_output && !first
+
+      if line.match(/^0*$/)
+        if first
+          first = false
+          line.scan(/.{1,2}/).map { |c| "#{c} " }.join[0..-1].rstrip
+        else
+          hide_output = true
+          '*'
+        end
+      else
+        hide_output = false
+        line.scan(/.{1,2}/).map { |c| "#{c} " }.join[0..-1].rstrip
+      end
+    end
+    out = out.compact
+    multi_line = out.length > 1
+    out = out.join("\n")
+    out += "\n" if multi_line
+    out
+  end
+
   #######
   private
   #######
