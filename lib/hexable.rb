@@ -6,9 +6,7 @@ module Hexable
   def to_hex(value)
     case value
     when String
-      @hex = value.delete(' ')
-      @hex = hex.ord.to_s(16) if hex.length == 1
-      @hex = hex.ord.to_s(16) unless hex.match(/^[0-9A-Fa-f]*$/)
+      @hex = value.ord.to_s(16)
     when Integer
       @hex = value.to_s(16)
     end

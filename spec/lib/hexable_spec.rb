@@ -19,13 +19,8 @@ describe Hexable do
       expect(dc.to_hex('H')).to eq '48'
     end
 
-    # NOTE: to specify a litteral hex `e` do 0xe
     it 'converts lower case letters' do
       expect(dc.to_hex('e')).to eq '65'
-    end
-
-    it 'converts uppercase hex with spaces' do
-      expect(dc.to_hex('E9 FD FF 00')).to eq 'e9fdff00'
     end
   end
 end
