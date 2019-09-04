@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'asm_codes'
-require_relative 'hexable'
 require_relative 'hex_file'
+require_relative 'hexable'
 require_relative 'interrupts'
 require_relative 'jumps'
 require_relative 'registers'
