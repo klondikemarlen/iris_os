@@ -8,11 +8,11 @@ describe Hexable do
   subject(:dc) { DummyClass.new }
   context '#to_hex' do
     it 'converts decimals' do
-      expect(dc.to_hex(1234)).to eq '04d2'
+      expect(dc.to_hex(1234)).to eq 'd204'
     end
 
     it 'converts hex' do
-      expect(dc.to_hex(0x234)).to eq '0234'
+      expect(dc.to_hex(0x234)).to eq '3402'
     end
 
     it 'converts upper case letters' do

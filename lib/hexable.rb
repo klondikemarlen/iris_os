@@ -12,7 +12,7 @@ module Hexable
     when Integer
       @hex = value.to_s(16)
     end
-    hex.downcase.rjust(pad_size, '0')
+    swap hex.downcase.rjust(pad_size, '0')
   end
 
   #######
@@ -21,5 +21,11 @@ module Hexable
 
   def pad_size
     hex.length + hex.length % 2
+  end
+
+  def swap(word)
+    return word unless word.length == 4
+
+    "#{word[2..4]}#{word[0..1]}"
   end
 end
