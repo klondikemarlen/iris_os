@@ -6,6 +6,8 @@ module Hexable
   def to_hex(value)
     case value
     when String
+      raise ArgumentError, 'No strings of hex!' if value.length > 1
+
       @hex = value.ord.to_s(16)
     when Integer
       @hex = value.to_s(16)

@@ -22,5 +22,9 @@ describe Hexable do
     it 'converts lower case letters' do
       expect(dc.to_hex('e')).to eq '65'
     end
+
+    it 'raises an error if you pass it a string of hex' do
+      expect { dc.to_hex('e9') }.to raise_error ArgumentError
+    end
   end
 end
