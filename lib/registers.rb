@@ -7,7 +7,7 @@ module Registers
 
   AsmCodes::REGISTERS.each do |method, code|
     define_method method do
-      code
+      to_hex(code)
     end
   end
 end
