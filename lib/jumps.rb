@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
 module Jumps
-  attr_reader :instructions, :symbols, :target
-
-  def initialize
-    @symbols = {}
-    @instructions = []
-  end
+  attr_reader :target
 
   # jmp '$'   ; Jump to the current address (i.e. forever).
   def address
@@ -19,15 +14,6 @@ module Jumps
     else
       twos_comp(symbols[target] - cursor - 1)
     end
-  end
-
-  def buffer
-    instructions.join
-  end
-
-  # position of last instruction in decimal?
-  def cursor
-    buffer.length
   end
 
   def label(label, &block)
