@@ -22,7 +22,7 @@ end
 describe 'BOOT_SECT' do
   context 'when run' do
     it 'produces the correct hex data' do
-      expect(BOOT_SECT.to_s).to eql <<~HEX
+      expect(BOOT_SECT.hexdump).to eql <<~HEX.chomp
         b4 0e b0 48 cd 10 b0 65 cd 10 b0 6c cd 10 b0 6c
         cd 10 b0 6f cd 10 e9 fd ff 00 00 00 00 00 00 00
         00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
