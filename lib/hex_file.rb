@@ -16,7 +16,7 @@ class HexFile
       data = f.read.unpack('H*')[0].to_s
     end
     @last_read_size = (data.length / 2)
-    fix_ordering data
+    data
   end
 
   def self.write(path)
@@ -27,11 +27,7 @@ class HexFile
   end
 
   def self.pack_safe(data)
-    without_spaces = data.split.join
-    swapped = without_spaces.scan(/.{1,4}/).map do |chars|
-      "#{chars[2..4]}#{chars[0..1]}"
-    end
-    swapped.join
+    data.split.join
   end
 
   def self.fix_ordering(data)

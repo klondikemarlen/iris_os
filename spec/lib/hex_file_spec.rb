@@ -15,7 +15,7 @@ describe HexFile do
         described_class.write test_file do
           'e9 fd'
         end
-        expect(first_word).to eq 'e9fd'
+        expect(first_word).to eq 'fde9'
       end
 
       it 'the second word is in the correct order' do
@@ -23,7 +23,7 @@ describe HexFile do
           'e9 fd ff 00'
         end
 
-        expect(second_word).to eq 'ff00'
+        expect(second_word).to eq '00ff'
       end
     end
   end
