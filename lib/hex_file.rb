@@ -2,6 +2,7 @@
 
 require 'pry'
 
+# TODO: < to handle little-endian-ness
 class HexFile
   class << self
     attr_reader :last_read_size

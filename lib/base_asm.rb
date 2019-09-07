@@ -45,10 +45,12 @@ module BaseAsm
       buffer.length
     end
 
+    # `hexdump <file>` - but on a string of hex
     def to_s
       Hexdump.new(buffer, word_size: 4).to_s
     end
 
+    # `od -t x1 -A n <file>` - but on a string of hex
     def hexdump(by: 2)
       Hexdump.new(buffer, word_size: by).to_s
     end
