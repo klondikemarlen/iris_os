@@ -5,6 +5,9 @@
 boot_sector = 'dist/boot_sect.bin'
 drive = '/dev/sdc'
 
+puts 'To get correct drive name do `lsblk`'
+puts 'To remove drive do `udisksctl unmount -b /dev/sdc1 && udisksctl power-off -b /dev/sdc`'
+
 # Write boot sector to drive
 puts 'Write command, please verify drive.'
 `sudo dd if=#{boot_sector} of=#{drive} bs=512 count=1`

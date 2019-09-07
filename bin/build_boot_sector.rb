@@ -13,8 +13,17 @@ HexFile.write out_file do
   BOOT_SECT.buffer
 end
 
-data = HexFile.read out_file
-puts data
-puts "File size: #{HexFile.last_read_size}"
+doc = <<~DOC
+  Read from Asm buffer (prettified):
+  #{BOOT_SECT.hexdump}
 
-puts 'Now run bin/write_load_boot_sector.rb'
+    File size: #{BOOT_SECT.buffer.length / 2}
+
+  Read from raw file data (via HexFile.read):
+  #{HexFile.read out_file}
+
+    File size: #{HexFile.last_read_size}
+
+  Now run bin/write_load_boot_sector.rb
+DOC
+puts doc
