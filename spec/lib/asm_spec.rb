@@ -14,7 +14,7 @@ describe Asm do
           end
         end
 
-        expect(asm.to_s).to eq 'e9 fd ff'
+        expect(asm.hexdump).to eq 'e9 fd ff'
       end
 
       it 'can understand pad' do
@@ -33,7 +33,7 @@ describe Asm do
           dw 0xaa55
         end
 
-        expect(asm.to_s).to eq 'aa 55'
+        expect(asm.hexdump).to eq 'aa 55'
       end
     end
   end
