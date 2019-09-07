@@ -2,6 +2,7 @@
 
 require_relative 'asm_codes'
 require_relative 'base_asm'
+require_relative 'definable'
 require_relative 'hex_file'
 require_relative 'hexable'
 require_relative 'interrupts'
@@ -13,6 +14,7 @@ require_relative 'registers'
 
 class Asm
   include BaseAsm
+  include Definable
   include Hexable
   include Interrupts
   include Jumps
@@ -21,11 +23,6 @@ class Asm
   #######
   private
   #######
-
-  def dw(value)
-    hex = to_hex(value)
-    @instructions << "#{hex[2..4]}#{hex[0..1]}"
-  end
 
   def pad(size, char)
     @instructions << to_hex(char) * (size - buffer.length / 2)

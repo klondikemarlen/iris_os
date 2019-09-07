@@ -33,7 +33,7 @@ describe Asm do
           dw 0xaa55
         end
 
-        expect(asm.hexdump).to eq 'aa 55'
+        expect(asm.hexdump).to eq '55 aa'
       end
     end
   end
