@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'asm'
-
 describe Asm do
   let(:asm) { described_class.new }
 
@@ -19,9 +17,6 @@ describe Asm do
 
       it 'can understand pad' do
         asm.build do
-          label :loop do
-            jmp :loop
-          end
           pad 510, 0
         end
 
