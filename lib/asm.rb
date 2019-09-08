@@ -7,6 +7,7 @@ require_relative 'hex_file'
 require_relative 'hexable'
 require_relative 'interrupts'
 require_relative 'jumps'
+require_relative 'paddable'
 require_relative 'registers'
 
 # TODO: make buffer squish spaces out
@@ -18,13 +19,6 @@ class Asm
   include Hexable
   include Interrupts
   include Jumps
+  include Paddable
   include Registers
-
-  #######
-  private
-  #######
-
-  def pad(size, char)
-    @instructions << to_hex(char) * (size - buffer.length / 2)
-  end
 end
