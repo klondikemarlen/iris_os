@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require './lib/hex_file'
+
 # requires drive to be partitioned as fat32 in gparted with boot flag set
 boot_sector = 'dist/boot_sect.bin'
 drive = '/dev/sdc'
@@ -10,7 +12,10 @@ puts 'To remove drive do `udisksctl unmount -b /dev/sdc1 && udisksctl power-off 
 
 # Write boot sector to drive
 puts 'Write command, please verify drive.'
-`sudo dd if=#{boot_sector} of=#{drive} bs=512 count=1`
+HexFile.write drive do
+  HexFile.read boot_sector
+end
+# `sudo dd if=#{boot_sector} of=#{drive} bs=512 count=1`
 
 # boot after install
 # `sudo qemu-system-x86_64 -hdb #{drive}`
