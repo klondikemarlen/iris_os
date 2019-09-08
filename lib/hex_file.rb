@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
-
 # TODO: < to handle little-endian-ness
 class HexFile
   class << self
