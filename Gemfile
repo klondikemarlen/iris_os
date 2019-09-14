@@ -2,6 +2,13 @@
 
 source 'https://rubygems.org'
 
-gem 'pry', '~> 0.12.2'
-gem 'pry-byebug', '~> 3.7'
-gem 'rspec', '~> 3.8'
+gem 'rspec'
+
+group :development do
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'pry'
+  gem 'pry-byebug'
+  gem 'pry-doc'
+  gem 'rubocop'
+end
