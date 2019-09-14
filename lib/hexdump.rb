@@ -27,6 +27,8 @@ class Hexdump
     end.join("\n")
   end
 
+  ##
+  # od -t x1 -A n <file-name>
   def to_s
     out = stream.scan(/.{1,#{line_length}}/).map do |line|
       @line = line
