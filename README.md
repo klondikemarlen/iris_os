@@ -4,7 +4,7 @@ An attempt a writing an OS primarily in Ruby with some bash scripting and Debian
 
 # Install (on Ubuntu 19.04)
 To test install qemu
-- `sudo apt-get install qemu-kvm qemu`
+- `sudo apt install qemu-kvm qemu nasm`
 - `echo "export RUBYGEMS_GEMDEPS=-" >> ~/.bashrc`
 - `source ~/.bashrc`
 - `bundle install`
@@ -17,8 +17,9 @@ To test install qemu
 3. `bin/write_load_boot_sector.rb`
 
 # Testing
-1. `guard` - in theory this uses the bundled version and watches your files
+- `guard` - in theory this uses the bundled version and watches your files
 for changes dynamically.
+- `bin/nasm.rb` - compiles the code in `scratchpad.asm` using the Nasm assembler. This is helpful for testing the results of specific commands during development.
 
 # Resources
 - https://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
