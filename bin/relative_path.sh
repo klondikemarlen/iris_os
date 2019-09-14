@@ -35,3 +35,6 @@ popd () {
   builtin popd "$@"
   relative_path_in_safe_dirs
 }
+
+# Fixes `source ~/.bashrc` wiping the current relative path.
+relative_path_in_safe_dirs
