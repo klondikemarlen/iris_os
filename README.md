@@ -8,6 +8,7 @@ To test install qemu
 - `echo "export RUBYGEMS_GEMDEPS=-" >> ~/.bashrc`
 - `source ~/.bashrc`
 - `bundle install`
+- *Optionally* copy the `bin/require_relative.sh` code into your .bashrc (or .profile)
 
 # Usage
 1. `chmod +x bin/*`
@@ -17,8 +18,7 @@ To test install qemu
 3. `bin/write_load_boot_sector.rb`
 
 # Testing
-- `guard` - in theory this uses the bundled version and watches your files
-for changes dynamically.
+- `guard` - uses the bundled version and watches your files for changes dynamically. (or `bin/guard` if you aren't using relative path hack.)
 - `bin/nasm.rb` - compiles the code in `scratchpad.asm` using the Nasm assembler. This is helpful for testing the results of specific commands during development.
 
 # Resources
