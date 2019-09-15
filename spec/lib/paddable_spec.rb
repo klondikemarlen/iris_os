@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require 'base_asm'
+require 'paddable'
+
 WithPaddable = Class.new do
   include BaseAsm
-  include Hexable
   include Paddable
 end
 
