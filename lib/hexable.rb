@@ -1,18 +1,24 @@
 # frozen_string_literal: true
 
-module Hexable
-  attr_reader :hex
+class Hex
+  attr_reader :value, :hex_string
 
-  def to_hex(value)
+  def initialize(value)
+    raise ArgumentError, 'No nil can become hex!' if value.nil?
+
+    @value = value
+  end
+
+  def to_s
     case value
     when String
       raise ArgumentError, 'No strings of hex!' if value.length > 1
 
-      @hex = value.ord.to_s(16)
+      @hex_string = value.ord.to_s(16)
     when Integer
-      @hex = value.to_s(16)
+      @hex_string = value.to_s(16)
     end
-    swap hex.downcase.rjust(pad_size, '0')
+    displacement hex_string.downcase.rjust(pad_size, '0')
   end
 
   #######
@@ -20,12 +26,19 @@ module Hexable
   #######
 
   def pad_size
-    hex.length + hex.length % 2
+    hex_string.length + hex_string.length % 2
   end
 
-  def swap(word)
+  # low byte, high byte
+  def displacement(word)
     return word unless word.length == 4
 
     "#{word[2..4]}#{word[0..1]}"
+  end
+end
+
+module Hexable
+  def to_hex(value)
+    Hex.new(value).to_s
   end
 end
