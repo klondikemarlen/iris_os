@@ -99,4 +99,7 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
+
+  # make allow use of describe directly.
+  config.expose_dsl_globally = true
 end
