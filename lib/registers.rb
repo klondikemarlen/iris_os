@@ -21,11 +21,10 @@
 # r15             | r15d          | r15w          | r15b
 # NOTE: the above information is missing ah, bh etc.
 class Register
-  attr_reader :name, :context
+  attr_reader :name
 
   def initialize(name)
     @name = name
-    @context = yield if block_given?
   end
 
   def width
