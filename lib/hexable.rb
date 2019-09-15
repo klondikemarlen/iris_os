@@ -1,15 +1,11 @@
 # frozen_string_literal: true
 
 class Hex
-  attr_reader :value, :hex_string
+  attr_reader :hex_string
 
   def initialize(value)
     raise ArgumentError, 'No nil can become hex!' if value.nil?
 
-    @value = value
-  end
-
-  def to_s
     case value
     when String
       raise ArgumentError, 'No strings of hex!' if value.length > 1
@@ -17,7 +13,12 @@ class Hex
       @hex_string = value.ord.to_s(16)
     when Integer
       @hex_string = value.to_s(16)
+    else
+      raise ArgumentError, "No values of type #{value.class}."
     end
+  end
+
+  def to_s
     displacement hex_string.downcase.rjust(pad_size, '0')
   end
 
