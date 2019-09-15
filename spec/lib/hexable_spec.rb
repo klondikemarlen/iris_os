@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require 'hexable'
+
 WithHexable = Class.new { include Hexable }
 
-describe Hexable do
+RSpec.describe Hexable do
   subject(:with_hexable) { WithHexable.new }
   context '#to_hex' do
     it 'converts decimals' do
