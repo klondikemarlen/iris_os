@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
+require 'base_asm'
 require 'moveable'
 
-describe Moveable do
+WithMoveable = Class.new do
+  include BaseAsm
+  include Moveable
+end
+
+RSpec.describe Moveable do
   subject(:with_moveable) { WithMoveable.new }
-  let(:WithMoveable) do
-    Class.new do
-      include described_class
-    end
-  end
 
   context '#mov' do
     # MOV r8 imm8 - B0+r
