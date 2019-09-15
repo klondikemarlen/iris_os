@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class Hexdump
-  attr_reader(
-    :stream, :word_size, :line_length, :hide_null, :line, :first_skip,
-    :hiding_output
-  )
+  attr_reader :stream, :word_size, :line_length, :hide_null, :line, :first_skip,
+              :hiding_output
 
   def initialize(stream, word_size: 4, line_length: 32, hide_null: true)
     @stream = stream

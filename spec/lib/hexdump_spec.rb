@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'hexdump'
+
 describe Hexdump do
   subject(:hexdump) { described_class.new(stream) }
   let(:stream) do
