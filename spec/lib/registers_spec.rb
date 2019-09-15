@@ -15,8 +15,8 @@ RSpec.describe Registers do
       expect(register.width).to eq 8
     end
 
-    it 'has the correct number' do
-      expect(register.number).to eq 4
+    it 'has the correct extension' do
+      expect(register.extension).to eq 4
     end
   end
 
@@ -26,8 +26,8 @@ RSpec.describe Registers do
       expect(register.width).to eq 8
     end
 
-    it 'has the correct number' do
-      expect(register.number).to eq 0
+    it 'has the correct extension' do
+      expect(register.extension).to eq 0
     end
   end
 
@@ -37,8 +37,8 @@ RSpec.describe Registers do
       expect(register.width).to eq 16
     end
 
-    it 'has the correct number' do
-      expect(register.number).to eq 3
+    it 'has the correct extension' do
+      expect(register.extension).to eq 3
     end
   end
 end

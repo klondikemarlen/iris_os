@@ -37,8 +37,8 @@ class Register
     end
   end
 
-  def number
-    Support::NUMBER[name]
+  def extension
+    Support::EXTENSION[name]
   end
 
   module Support
@@ -67,7 +67,7 @@ class Register
     ##
     # REGISTERS.each_with_index do |s, i|
     #   s.each { |r| order[r] = i }
-    NUMBER = {
+    EXTENSION = {
       al: 0, ax: 0, eax: 0, mm0: 0, xmm0: 0, ymm0: 0, zmm0: 0,
       cl: 1, cx: 1, ecx: 1, mm1: 1, xmm1: 1, ymm1: 1, zmm1: 1,
       dl: 2, dx: 2, edx: 2, mm2: 2, xmm2: 2, ymm2: 2, zmm2: 2,
