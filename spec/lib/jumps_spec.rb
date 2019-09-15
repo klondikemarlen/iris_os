@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
+require 'base_asm'
+require 'jumps'
+
 WithJumps = Class.new do
   include BaseAsm
-  include Hexable
   include Jumps
 end
 
-describe Jumps do
+RSpec.describe Jumps do
   subject(:with_jumps) { WithJumps.new }
   context '#jmp' do
     it 'can understand jmp to label' do

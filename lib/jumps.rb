@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
+require 'hexable'
+require 'asm_codes'
+
 module Jumps
+  include Hexable
+
   attr_reader :target
 
   # NASM supports two special tokens in expressions, allowing calculations to
