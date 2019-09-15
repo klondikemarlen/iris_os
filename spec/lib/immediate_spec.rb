@@ -2,7 +2,7 @@
 
 require 'immediate'
 
-RSpec.describe Immediate do
+describe Immediate do
   subject(:immediate) { described_class.new value }
   context 'an 8-bit, byte immediate' do
     let(:value) { 0x0e }

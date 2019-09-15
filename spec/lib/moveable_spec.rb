@@ -8,7 +8,7 @@ WithMoveable = Class.new do
   include Moveable
 end
 
-RSpec.describe Moveable do
+describe Moveable do
   subject(:with_moveable) { WithMoveable.new }
 
   context '#mov' do

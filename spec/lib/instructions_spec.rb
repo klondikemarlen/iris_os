@@ -4,7 +4,7 @@ require 'registers'
 require 'immediate'
 require 'instructions'
 
-RSpec.describe Instructions::Types::R8_IMM8 do
+describe Instructions::Types::R8_IMM8 do
   subject(:r8_imm8) { described_class }
   let(:instruction) { Instruction.new(:mov, *operators) }
   context 'when an 8-bit register and an 8-bit immediate' do

@@ -8,7 +8,7 @@ WithJumps = Class.new do
   include Jumps
 end
 
-RSpec.describe Jumps do
+describe Jumps do
   subject(:with_jumps) { WithJumps.new }
   context '#jmp' do
     it 'can understand jmp to label' do

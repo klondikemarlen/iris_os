@@ -4,7 +4,7 @@ require 'hexable'
 
 WithHexable = Class.new { include Hexable }
 
-RSpec.describe Hexable do
+describe Hexable do
   subject(:with_hexable) { WithHexable.new }
   context '#to_hex' do
     it 'converts decimals' do

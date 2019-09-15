@@ -4,7 +4,7 @@ require 'operators'
 require 'registers'
 require 'immediate'
 
-RSpec.describe Operators::Types::R8 do
+describe Operators::Types::R8 do
   subject(:r8) { described_class }
 
   context 'when given an 8-bit register' do
@@ -29,7 +29,7 @@ RSpec.describe Operators::Types::R8 do
   end
 end
 
-RSpec.describe Operators::Types::IMM8 do
+describe Operators::Types::IMM8 do
   subject(:imm8) { described_class }
   context 'when given an 8-bit immediate' do
     let(:operator) { Immediate.new(0x0e) }

@@ -6,7 +6,7 @@ WithRegisters = Class.new do
   include Registers
 end
 
-RSpec.describe Registers do
+describe Registers do
   subject(:with_registers) { WithRegisters.new }
 
   context '#ah' do
