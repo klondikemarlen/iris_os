@@ -30,6 +30,9 @@ end
 class Instruction
   attr_reader :name, :operators
 
+  ##
+  # Fail fast is purely for testing.
+  # Perhaps a better technique would be to fix the tests ...
   def initialize(mnemonic, *operators, fast_fail: true)
     @name = mnemonic
     @operators = operators
