@@ -3,14 +3,26 @@
 require 'operators'
 
 module Instructions
-  module Types
-    include Operators::Types # not sure if this is a good idea ..
+  module Ops
+    include Operators::Types
+  end
 
+  module Types
     R8_IMM8 = lambda do |ctx|
       return false unless ctx.count == 2
-      return false unless IMM8.call ctx.op2
+      return false unless Ops::IMM8.call ctx.op2
 
-      R8.call ctx.op1
+      Ops::R8.call ctx.op1
+    end
+  end
+
+  class << self
+    include Enumerable
+
+    def each(&block)
+      Types.constants.each do |symbol|
+        block.call(symbol, Types.const_get(symbol))
+      end
     end
   end
 end
@@ -18,30 +30,43 @@ end
 class Instruction
   attr_reader :name, :operators
 
-  def initialize(mnemonic, *operators)
+  def initialize(mnemonic, *operators, fast_fail: true)
     @name = mnemonic
     @operators = operators
     define_opx_for_each_operator
+    @type = determine_type if fast_fail
   end
 
   def count
     operators.length
   end
 
-  def define_opx_for_each_operator
-    operators.each.with_index(1) do |op, i|
-      instance_variable_set "@op#{i}", op
-      self.class.send :attr_reader, "op#{i}".intern
-    end
+  def type
+    @type ||= determine_type
   end
 
-  def type
-    @type || ContextTypes.constants.each do |type|
-      result = type.call(self)
-      if result
-        @type = type.downcase
-        break
-      end
+  #######
+  private
+  #######
+
+  def determine_type
+    local_type = nil
+    Instructions.each do |label, matcher|
+      local_type = matcher.call(self) && label.downcase
+      break unless local_type.nil?
+    end
+
+    unless local_type
+      raise ArgumentError,
+            "No type matcher for operators: #{operators}."
+    end
+
+    local_type
+  end
+
+  def define_opx_for_each_operator
+    operators.each.with_index(1) do |op, i|
+      define_singleton_method("op#{i}".intern) { op }
     end
   end
 end
