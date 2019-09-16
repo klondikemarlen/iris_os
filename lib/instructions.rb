@@ -73,8 +73,12 @@ class Instruction
   end
 
   def type_cast(operator)
-    return Immediate.new(operator) if operator.is_a? Integer
+    return operator if operator.is_a?(Register) || operator.is_a?(Immediate)
 
-    operator
+    if operator.is_a?(Integer) || operator.is_a?(String)
+      return Immediate.new(operator)
+    end
+
+    raise ArgumentError, "No type match for operator class #{operator.class}."
   end
 end

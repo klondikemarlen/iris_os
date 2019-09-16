@@ -17,7 +17,15 @@ describe Instruction do
 
     context 'when passed bad data' do
       let(:operators) { ['bad operator', 'other bad operator'] }
-      it 'fails gracefully, early' do
+      it 'fails informatively' do
+        expect { instruction }.to raise_error ArgumentError,
+                                              /Only single characters allowed/
+      end
+    end
+
+    context 'when no type found' do
+      let(:operators) { [Register.new(:zmm7)] }
+      it 'fails imformatively' do
         expect { instruction }.to raise_error ArgumentError,
                                               /No type matcher for/
       end
