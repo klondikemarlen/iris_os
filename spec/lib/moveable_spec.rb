@@ -21,3 +21,24 @@ describe Moveable do
     end
   end
 end
+
+describe Move do
+  subject(:move) { described_class.new destination, source }
+  let(:destination) { Register.new(:al) }
+
+  describe '#new' do
+    context 'when given a register and a character' do
+      let(:source) { 'H' }
+      it 'works' do
+        expect(move.to_s).to eq 'b048'
+      end
+    end
+
+    context 'when give a register and a label' do
+      let(:source) { :some_label }
+      it 'works' do
+        expect(move.to_s).to eql '...'
+      end
+    end
+  end
+end

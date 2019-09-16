@@ -3,66 +3,36 @@
 require 'registers'
 require 'immediate'
 require 'hexable'
+require 'instructions'
 
 class Move
   include Hexable
 
-  attr_reader :dest, :src, :src_type, :dest_type
+  attr_reader :dest, :src, :src_type, :dest_type, :instruction
 
   def initialize(destination, source)
-    self.src = source
+    @instruction = Instruction.new(:mov, destination, source)
+    @src = source
     self.dest = destination
   end
 
   def dest=(operator)
     @dest = \
-      case operator
-      when Support::R8
+      case instruction.type
+      when :r8_imm8
         0xb0 + operator.extension
-      end
-    self.dest_type = operator
-  end
-
-  def dest_type=(operator)
-    @dest_type = \
-      case operator
-      when Support::R8
-        :r8
-      end
-  end
-
-  def src=(operator)
-    @src = \
-      case operator
-      when Numeric
-        self.src_type = Immediate.new(operator)
-        operator
-      end
-  end
-
-  def src_type=(operator)
-    @src_type = \
-      case operator
-      when Support::IMM8
-        :imm8
       end
   end
 
   def to_s
-    case self
-    when Support::R8_IMM8
+    case type
+    when :r8_imm8
       to_hex(dest) + to_hex(src)
     end
   end
 
   def type
-    "#{dest_type}_#{src_type}".intern
-  end
-
-  module Support
-    R8 = ->(op) { op.is_a?(Register) && op.width == 8 }
-    IMM8 = ->(op) { op.is_a?(Immediate) && op.width == 8 }
-    R8_IMM8 = ->(op) { op.type == :r8_imm8 }
+    instruction.type
   end
 end
 
