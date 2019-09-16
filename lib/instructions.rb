@@ -66,7 +66,15 @@ class Instruction
 
   def define_opx_for_each_operator
     operators.each.with_index(1) do |op, i|
-      define_singleton_method("op#{i}".intern) { op }
+      define_singleton_method("op#{i}".intern) do
+        type_cast(op)
+      end
     end
+  end
+
+  def type_cast(operator)
+    return Immediate.new(operator) if operator.is_a? Integer
+
+    operator
   end
 end
