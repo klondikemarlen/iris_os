@@ -8,7 +8,7 @@ class Hex
 
     case value
     when String
-      raise ArgumentError, 'No strings of hex!' if value.length > 1
+      raise ArgumentError, 'Only single characters allowed!' if value.length > 1
 
       @hex_string = value.ord.to_s(16)
     when Integer
