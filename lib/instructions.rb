@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+require 'immediate'
+require 'label'
 require 'operators'
+require 'registers'
 
 module Instructions
   module Ops
@@ -52,6 +55,14 @@ class Instruction
   private
   #######
 
+  def cast_to_assembly_types(operator)
+    return operator if no_cast_needed?(operator)
+    return Immediate.new(operator) if immediate_equivalent?(operator)
+    return Label.new(operator) if label_equivalent?(operator)
+
+    raise ArgumentError, "No type match for operator class #{operator.class}."
+  end
+
   def determine_type
     local_type = nil
     Instructions.each do |label, matcher|
@@ -70,18 +81,22 @@ class Instruction
   def define_opx_for_each_operator
     operators.each.with_index(1) do |op, i|
       define_singleton_method("op#{i}".intern) do
-        type_cast(op)
+        cast_to_assembly_types(op)
       end
     end
   end
 
-  def type_cast(operator)
-    return operator if operator.is_a?(Register) || operator.is_a?(Immediate)
+  def immediate_equivalent?(operator)
+    operator.is_a?(Integer) || operator.is_a?(String)
+  end
 
-    if operator.is_a?(Integer) || operator.is_a?(String)
-      return Immediate.new(operator)
+  def label_equivalent?(operator)
+    operator.is_a? Symbol
+  end
+
+  def no_cast_needed?(operator)
+    [Register, Immediate, Label].any? do |klass|
+      operator.is_a? klass
     end
-
-    raise ArgumentError, "No type match for operator class #{operator.class}."
   end
 end
