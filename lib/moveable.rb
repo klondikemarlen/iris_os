@@ -41,6 +41,6 @@ module Moveable
 
   # B0+ rb  MOV r8,imm8   Move imm8 to r8.
   def mov(destination, source)
-    instructions << Move.new(destination, source).to_s
+    @instructions << Move.new(destination, source).to_s
   end
 end
