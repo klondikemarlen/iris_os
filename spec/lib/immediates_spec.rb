@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'immediate'
+require 'immediates'
 
 describe Immediate do
   subject(:immediate) { described_class.new value }
@@ -25,7 +25,7 @@ describe Immediate do
       let(:value) { 3.7 }
       it 'fails informatively' do
         expect { immediate }.to raise_error ArgumentError,
-                                            /Can only cast String to ordinal/
+                                            /Can't create Immediate from/
       end
     end
   end

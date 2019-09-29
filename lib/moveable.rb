@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'registers'
-require 'immediate'
+require 'immediates'
 require 'hexable'
 require 'instructions'
 

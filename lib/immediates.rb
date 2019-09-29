@@ -9,12 +9,7 @@ class Immediate
   attr_reader :value
 
   def initialize(value)
-    if value.is_a? Integer
-      @value = value
-      return
-    end
-
-    @value = cast_to_ord(value)
+    @value = cast(value)
   end
 
   def width
@@ -29,6 +24,14 @@ class Immediate
   private
   #######
 
+  def cast(value)
+    return value if value.is_a? Integer
+    return cast_to_ord(value) if value.is_a? String
+    return lookup_label(value) if value.is_a? Symbol
+
+    raise ArgumentError, "Can't create Immediate from #{value.class}."
+  end
+
   def cast_to_ord(char)
     unless char.is_a? String
       raise ArgumentError, 'Can only cast String to ordinal.'
@@ -39,5 +42,9 @@ class Immediate
     end
 
     char.ord
+  end
+
+  def lookup_label(value)
+    value
   end
 end

@@ -2,7 +2,7 @@
 
 require 'operators'
 require 'registers'
-require 'immediate'
+require 'immediates'
 
 describe Operators::Types::R8 do
   subject(:r8) { described_class }

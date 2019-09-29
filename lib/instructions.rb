@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'immediate'
 require 'label'
+require 'immediates'
 require 'operators'
 require 'registers'
 
