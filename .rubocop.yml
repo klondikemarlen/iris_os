@@ -1,6 +1,14 @@
 Style/Documentation:
   Enabled: false
+
 Lint/Debugger:
   Enabled: false
+
 Layout/EmptyLinesAroundAccessModifier:
+  Enabled: false
+
+Style/BlockDelimiters:
+  EnforcedStyle: braces_for_chaining
+
+Style/BlockComments:
   Enabled: false
