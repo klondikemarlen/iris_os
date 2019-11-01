@@ -7,14 +7,14 @@ describe Instruction do
   subject(:instruction) { described_class.new :mov, *operators }
 
   describe '#new' do
-    context 'when give a register and an hex integer' do
+    context 'when given a register and an hex integer' do
       let(:operators) { [Register.new(:ah), 0x0e] }
       it 'converts to immediate' do
         expect(instruction.op2).to be_kind_of Immediate
       end
     end
 
-    context 'when give a register and a label' do
+    context 'when given a register and a label' do
       let(:operators) { [Register.new(:ah), Label.new(10, context: {})] }
       it 'converts the label to immediate' do
         expect(instruction.op2).to be_kind_of Immediate
@@ -39,7 +39,7 @@ describe Instruction do
   end
 
   describe '#type' do
-    context 'when give an 8-bit registers and an 8-bit immediate' do
+    context 'when given an 8-bit registers and an 8-bit immediate' do
       let(:operators) { [Register.new(:ah), Immediate.new(0x0e)] }
 
       it 'returns the correct symbol' do
