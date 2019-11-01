@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'asm'
+
 describe Asm do
   let(:asm) { described_class.new }
 
@@ -7,8 +9,8 @@ describe Asm do
     context 'when building instructions' do
       it 'can understand jmp to label' do
         asm.build do
-          label :loop do
-            jmp :loop
+          label :endless do
+            jmp endless
           end
         end
 
