@@ -2,6 +2,7 @@
 
 require 'base_error'
 require 'hexable'
+require 'immediates'
 
 =begin
 What is a label?
@@ -14,6 +15,8 @@ Or
 It can be an address to a block of code?
 =end
 class Label
+  include Hexable
+
   class UndefinedLabelError < AsmError; end
   class AlreadyDefinedError < AsmError; end
 
@@ -26,12 +29,11 @@ class Label
   end
 
   def to_imm
-    @value
-    raise NotImplementedError, 'Write the code now!'
+    Immediate.new(@value)
   end
 
   def to_s
-    Hex.new(@value).to_s
+    hex_string @value
   end
 end
 

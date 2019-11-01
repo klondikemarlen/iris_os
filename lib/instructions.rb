@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'label'
 require 'immediates'
 require 'operators'
 require 'registers'
+require 'labels'
 
 module Instructions
   module Ops
@@ -58,7 +58,7 @@ class Instruction
   def cast_to_assembly_types(operator)
     return operator if no_cast_needed?(operator)
     return Immediate.new(operator) if immediate_equivalent?(operator)
-    return Label.new(operator) if label_equivalent?(operator)
+    return operator.to_imm if operator.is_a?(Label)
 
     raise ArgumentError, "No type match for operator class #{operator.class}."
   end
@@ -87,11 +87,7 @@ class Instruction
   end
 
   def immediate_equivalent?(operator)
-    operator.is_a?(Integer) || operator.is_a?(String)
-  end
-
-  def label_equivalent?(operator)
-    operator.is_a? Symbol
+    [Integer, String].any? { |klass| operator.is_a?(klass) }
   end
 
   def no_cast_needed?(operator)

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'instructions'
+require 'labels'
 
 describe Instruction do
   subject(:instruction) { described_class.new :mov, *operators }
@@ -9,6 +10,13 @@ describe Instruction do
     context 'when give a register and an hex integer' do
       let(:operators) { [Register.new(:ah), 0x0e] }
       it 'converts to immediate' do
+        expect(instruction.op2).to be_kind_of Immediate
+      end
+    end
+
+    context 'when give a register and a label' do
+      let(:operators) { [Register.new(:ah), Label.new(10, context: {})] }
+      it 'converts the label to immediate' do
         expect(instruction.op2).to be_kind_of Immediate
       end
     end
@@ -26,13 +34,6 @@ describe Instruction do
       it 'fails imformatively' do
         expect { instruction }.to raise_error ArgumentError,
                                               /No type matcher for/
-      end
-    end
-
-    context 'when given a register and a symbol' do
-      let(:operators) { [Register.new(:al), :the_secret] }
-      it 'converts the symbol to label' do
-        expect(instruction.op2).to be_kind_of Label
       end
     end
   end
