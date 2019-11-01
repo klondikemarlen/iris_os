@@ -35,9 +35,9 @@ describe Move do
     end
 
     context 'when give a register and a label' do
-      let(:source) { :some_label }
+      let(:source) { Label.new(5, context: {}) }
       it 'works' do
-        expect(move.to_s).to eql '...'
+        expect(move.to_s).to eql 'b005'
       end
     end
   end
