@@ -22,7 +22,7 @@ class Move
       @src = instr.op2.value
     else
       raise UnkownInstructionError,
-        "Write the code to handle instruction #{instr.type}"
+            "Write the code to handle instruction #{instr.type}"
     end
     @instruction = instruction
   end
