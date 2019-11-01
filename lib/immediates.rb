@@ -24,27 +24,21 @@ class Immediate
   private
   #######
 
-  def cast(value)
-    return value if value.is_a? Integer
-    return cast_to_ord(value) if value.is_a? String
-    return lookup_label(value) if value.is_a? Symbol
-
-    raise ArgumentError, "Can't create Immediate from #{value.class}."
+  def cast(object)
+    case object
+    when Integer
+      object
+    when String
+      cast_to_ord(object)
+    else
+      raise ArgumentError, "Can't create Immediate from #{value.class}."
+    end
   end
 
   def cast_to_ord(char)
-    unless char.is_a? String
-      raise ArgumentError, 'Can only cast String to ordinal.'
-    end
-
-    unless char.length == 1
-      raise ArgumentError, 'Only single characters allowed.'
-    end
+    raise ArgumentError, 'Only single characters allowed.' \
+      unless char.length == 1
 
     char.ord
-  end
-
-  def lookup_label(value)
-    value
   end
 end

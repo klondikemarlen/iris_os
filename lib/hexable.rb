@@ -3,18 +3,16 @@
 class Hex
   attr_reader :hex_string
 
-  def initialize(value)
-    raise ArgumentError, 'No nil can become hex!' if value.nil?
+  def initialize(object)
+    raise ArgumentError, 'No nil can become hex!' if object.nil?
 
-    case value
-    when String
-      raise ArgumentError, 'Only single characters allowed!' if value.length > 1
-
-      @hex_string = value.ord.to_s(16)
+    case object
     when Integer
-      @hex_string = value.to_s(16)
+      @hex_string = object.to_s(16)
+    when String
+      @hex_string = cast_to_ord(object)
     else
-      raise ArgumentError, "No values of type #{value.class}."
+      raise ArgumentError, "No values of type #{object.class}."
     end
   end
 
@@ -25,6 +23,13 @@ class Hex
   #######
   private
   #######
+
+  def cast_to_ord(char)
+    raise ArgumentError, 'Only single characters allowed.' \
+      unless char.length == 1
+
+    char.ord.to_s(16)
+  end
 
   def pad_size
     hex_string.length + hex_string.length % 2
