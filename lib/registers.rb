@@ -96,7 +96,7 @@ end
 module Registers
   # AsmCodes::REGISTERS.each do |method, code|
   #   define_method method do
-  #     to_hex(code)
+  #     hex_string(code)
   #   end
   # end
   Register::Support::NAMES.each do |line|

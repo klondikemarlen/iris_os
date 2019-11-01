@@ -39,7 +39,7 @@ class Hex
 end
 
 module Hexable
-  def to_hex(value)
+  def hex_string(value)
     Hex.new(value).to_s
   end
 end

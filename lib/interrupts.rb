@@ -2,6 +2,6 @@
 
 module Interrupts
   def int(value)
-    instructions << to_hex(AsmCodes::INT) << to_hex(value)
+    instructions << hex_string(AsmCodes::INT) << hex_string(value)
   end
 end

@@ -21,7 +21,7 @@ module Jumps
       twos_comp(-3)
     when '$$'
       raise # I'm not sure what should go here
-      # to_hex(cursor + 2) # ?
+      # hex_string(cursor + 2) # ?
     else
       twos_comp(symbols[target] - cursor - 1)
     end
@@ -36,7 +36,7 @@ module Jumps
   # Jump near, relative, displacement relative to next instruction.
   def jmp(target)
     @target = target
-    @instructions << to_hex(AsmCodes::JMP) << to_hex(address)
+    @instructions << hex_string(AsmCodes::JMP) << hex_string(address)
   end
 
   def twos_comp(value)

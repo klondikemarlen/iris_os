@@ -23,7 +23,7 @@ describe Paddable do
     it 'raises an error if your pad is less than the current size' do
       expect do
         with_paddable.build do
-          @instructions << to_hex(0) * 700 # make pad to 510 be impossible
+          @instructions << hex_string(0) * 700 # make pad to 510 be impossible
           pad 510, 0
         end
       end.to raise_error ArgumentError

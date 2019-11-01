@@ -2,6 +2,6 @@
 
 module Definable
   def dw(value)
-    @instructions << to_hex(value)
+    @instructions << hex_string(value)
   end
 end

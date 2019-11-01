@@ -17,7 +17,7 @@ class Immediate
   end
 
   def to_s
-    to_hex(value)
+    hex_string value
   end
 
   #######

@@ -27,7 +27,7 @@ class Move
   def to_s
     case type
     when :r8_imm8
-      to_hex(dest) + to_hex(src)
+      hex_string(dest) + hex_string(src)
     end
   end
 

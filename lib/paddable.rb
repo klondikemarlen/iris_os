@@ -10,6 +10,6 @@ module Paddable
       raise ArgumentError, 'You have too much code already!'
     end
 
-    @instructions << to_hex(char) * (size - buffer.length / 2)
+    @instructions << hex_string(char) * (size - buffer.length / 2)
   end
 end
