@@ -80,9 +80,7 @@ class Instruction
 
   def define_opx_for_each_operator
     operators.each.with_index(1) do |op, i|
-      define_singleton_method("op#{i}".intern) do
-        cast_to_assembly_types(op)
-      end
+      define_singleton_method("op#{i}".intern) { cast_to_assembly_types(op) }
     end
   end
 
@@ -91,8 +89,6 @@ class Instruction
   end
 
   def no_cast_needed?(operator)
-    [Register, Immediate, Label].any? do |klass|
-      operator.is_a? klass
-    end
+    [Register, Immediate].any? { |klass| operator.is_a?(klass) }
   end
 end
