@@ -10,22 +10,22 @@ WithJumps = Class.new do
   include Labels
 end
 
-describe Jumps do
-  subject(:with_jumps) { WithJumps.new }
+describe WithJumps do
+  subject(:asm) { described_class.new }
   context '#jmp' do
     it 'can understand jmp to label' do
-      with_jumps.label :endless do
+      asm.label :endless do
         jmp endless
       end
 
-      expect(with_jumps.buffer).to eq 'e9fdff'
+      expect(asm.buffer).to eq 'e9fdff'
     end
 
     it 'can jump to the current address (i.e. forever)' do
-      with_jumps.build do
+      asm.build do
         jmp '$'
       end
-      expect(with_jumps.buffer).to eq 'e9fdff'
+      expect(asm.buffer).to eq 'e9fdff'
     end
   end
 end
