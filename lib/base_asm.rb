@@ -2,14 +2,13 @@
 
 require_relative 'hexdump'
 
-# Currently just a placeholder.
-# Later this wil controll word size
-# in  16-bit  real  mode,  aword refers to a 16-bit value
-# in 32-bit protected mode, awordrefers to a 32-bit value
+##
+# This controls word size
+# in  16-bit  real  mode,  a word refers to a 16-bit value
+# in 32-bit protected mode, a word refers to a 32-bit value
 # short,int, and long, which usually represent
 # 16-bit, 32-bit, and 64-bit values, respectively.
-# 8 bit values, which are named bytes
-# 2 hex chars per byte, 4 hex chars in 16 bits.
+# 8 bit values are named bytes, 2 hex chars per byte, 4 hex chars in 16 bits.
 MODES = {
   16 => :'16_BIT_REAL',
   32 => :'32_BIT_PROECTED'
