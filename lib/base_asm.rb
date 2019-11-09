@@ -16,7 +16,7 @@ MODES = {
 }.freeze
 
 module BaseAsm
-  attr_reader :instructions, :symbols
+  attr_reader :instructions, :symbols, :mode
 
   module ClassMethods
     def build(&block)

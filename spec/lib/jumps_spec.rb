@@ -2,25 +2,47 @@
 
 require 'base_asm'
 require 'jumps'
+require 'labels'
 
 WithJumps = Class.new do
   include BaseAsm
   include Jumps
+  include Labels
 end
 
 describe Jumps do
   subject(:with_jumps) { WithJumps.new }
   context '#jmp' do
     it 'can understand jmp to label' do
-      with_jumps.label :loop do
-        jmp :loop
+      with_jumps.label :endless do
+        jmp endless
       end
 
       expect(with_jumps.buffer).to eq 'e9fdff'
     end
 
     it 'can jump to the current address (i.e. forever)' do
-      expect(with_jumps.jmp('$').join).to eq 'e9fdff'
+      with_jumps.build do
+        jmp '$'
+      end
+      expect(with_jumps.buffer).to eq 'e9fdff'
+    end
+  end
+end
+
+describe Jump do
+  subject(:jump) do
+    described_class.new destination, current_assembly_position: 0,
+                                     mode: :'16_BIT_REAL'
+  end
+
+  describe '#new' do
+    context 'when in 16 bit real mode' do
+      let(:destination) { '$' }
+
+      it 'works for the special symbol: $' do
+        expect(jump.to_s).to eq 'e9fdff'
+      end
     end
   end
 end
