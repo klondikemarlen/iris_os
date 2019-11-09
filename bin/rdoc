@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+RDOC_PORT=8000
+
+start_browser_delayed_background () {
+    (sleep 1s; firefox -new-window http://localhost:$RDOC_PORT) &
+}
+
+kill_any_running_rdoc_servers () {
+    pids=$(lsof -t -i:$RDOC_PORT)
+    if [[ "" != "$pids" ]]; then
+        $pids | xargs kill
+    fi
+}
+
+generate_rdoc_docs () {
+    bundle exec rdoc --main README.rdoc
+}
+
+serve_rdoc_docs () {
+    bundle exec ruby -run -e httpd -- doc/ -p $RDOC_PORT
+}
+
+start () {
+    generate_rdoc_docs
+    kill_any_running_rdoc_servers
+    start_browser_delayed_background
+    serve_rdoc_docs
+}
+
+start
