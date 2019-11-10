@@ -26,6 +26,10 @@ describe Hexable do
       expect { hex_string('e9') }.to raise_error Hex::MultiCharStringError
     end
 
+    it 'converts negatives to two complement' do
+      expect(hex_string(-3)).to eq 'fd'
+    end
+
     it 'raise an error on nil' do
       expect { hex_string(nil) } .to raise_error Hex::NoNilError
     end
@@ -36,11 +40,11 @@ describe Hexable do
       end
 
       it "pads negative numbers with f's" do
-        expect(hex_string(0xfd, width: :dw)).to eq 'fdff'
+        expect(hex_string(-3, width: :dw)).to eq 'fdff'
       end
 
       it 'accepts :word or dw' do
-        expect(hex_string(0xfd, width: :word)).to eq 'fdff'
+        expect(hex_string(-3, width: :word)).to eq 'fdff'
       end
 
       it 'fails informatively when passed an unknown width' do

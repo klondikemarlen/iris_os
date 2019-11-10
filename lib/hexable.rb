@@ -12,12 +12,13 @@ class Hex
   def initialize(object, width: nil)
     raise NoNilError, 'No nil can become hex!' if object.nil?
 
+    @pad_char = ''
     @hex_width = symolic_width_to_hex_size(width)
-    @hex_string = parse_object(object).downcase
+    @hex_string = parse_object(object)
   end
 
   def to_s
-    displacement hex_string.rjust(pad_size, pad_char)
+    displacement hex_string.rjust(pad_size, @pad_char)
   end
 
   #######
@@ -28,7 +29,15 @@ class Hex
     raise MultiCharStringError, 'Only single characters allowed.' \
       unless char.length == 1
 
+    @pad_char = '0'
     char.ord.to_s(16)
+  end
+
+  # low byte, high byte
+  def displacement(word)
+    return word unless word.length == 4
+
+    "#{word[2..4]}#{word[0..1]}"
   end
 
   def pad_size
@@ -37,16 +46,22 @@ class Hex
     hex_string.length + hex_string.length % 2
   end
 
-  def pad_char
-    hex_string.start_with?('f') ? 'f' : '0'
+  def parse_integer(int)
+    unless int.negative?
+      @pad_char = '0'
+      return int.to_s(16)
+    end
+
+    @pad_char = 'f'
+    twos_complement_as_hex(int)
   end
 
   def parse_object(object)
     case object
     when Integer
-      @hex_string = object.to_s(16)
+      parse_integer(object)
     when String
-      @hex_string = cast_to_ord(object)
+      cast_to_ord(object)
     else
       raise ArgumentError, "No values of type #{object.class}."
     end
@@ -66,11 +81,10 @@ class Hex
     end
   end
 
-  # low byte, high byte
-  def displacement(word)
-    return word unless word.length == 4
-
-    "#{word[2..4]}#{word[0..1]}"
+  def twos_complement_as_hex(negative_int)
+    num_bytes = negative_int.to_s(16).length - 1
+    mask = "0x#{'f' * num_bytes}".to_i(16)
+    (mask & negative_int).to_s(16)
   end
 end
 
