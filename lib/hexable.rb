@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
+require 'base_error'
+
 class Hex
+  class UnknownWidthError < AsmError; end
+  class MultiCharStringError < AsmError; end
+  class NoNilError < AsmError; end
+
   attr_reader :hex_string
 
-  def initialize(object, bit_width: nil, hex_width: nil)
-    raise ArgumentError, 'No nil can become hex!' if object.nil?
-    raise ArgumentError, 'Pick either hex_width or bit_width not both' \
-      unless hex_width.nil? || bit_width.nil?
+  def initialize(object, width: nil)
+    raise NoNilError, 'No nil can become hex!' if object.nil?
 
-    @hex_width = hex_width || (bit_width && bit_width / 4)
+    @hex_width = symolic_width_to_hex_size(width)
     @hex_string = parse_object(object).downcase
   end
 
@@ -21,7 +25,7 @@ class Hex
   #######
 
   def cast_to_ord(char)
-    raise ArgumentError, 'Only single characters allowed.' \
+    raise MultiCharStringError, 'Only single characters allowed.' \
       unless char.length == 1
 
     char.ord.to_s(16)
@@ -48,6 +52,20 @@ class Hex
     end
   end
 
+  ##
+  # The size in bits / 4
+  def symolic_width_to_hex_size(width)
+    return nil if width.nil?
+
+    if %i[byte db].include?(width)
+      2
+    elsif %i[word dw].include?(width)
+      4
+    else
+      raise UnknownWidthError, "No match for width type #{width.inspect}."
+    end
+  end
+
   # low byte, high byte
   def displacement(word)
     return word unless word.length == 4
@@ -57,7 +75,7 @@ class Hex
 end
 
 module Hexable
-  def hex_string(value, bit_width: nil, hex_width: nil)
-    Hex.new(value, bit_width: bit_width, hex_width: hex_width).to_s
+  def hex_string(value, width: nil)
+    Hex.new(value, width: width).to_s
   end
 end

@@ -22,32 +22,32 @@ describe Hexable do
       expect(hex_string('e')).to eq '65'
     end
 
-    it 'raises an error if you pass it a string of hex' do
-      expect { hex_string('e9') }.to raise_error ArgumentError
+    it 'raises an error on a multi-character string' do
+      expect { hex_string('e9') }.to raise_error Hex::MultiCharStringError
     end
 
     it 'raise an error on nil' do
-      expect { hex_string(nil) } .to raise_error ArgumentError
+      expect { hex_string(nil) } .to raise_error Hex::NoNilError
     end
 
     context 'when padding to a specific width' do
       it "pads positive numbers with 0's" do
-        expect(hex_string(0x1e, bit_width: 16)).to eq '1e00'
+        expect(hex_string(0x1e, width: :dw)).to eq '1e00'
       end
 
       it "pads negative numbers with f's" do
-        expect(hex_string(0xfd, bit_width: 16)).to eq 'fdff'
+        expect(hex_string(0xfd, width: :dw)).to eq 'fdff'
       end
 
-      it 'accepts a hex_width' do
-        expect(hex_string(0x1e, hex_width: 4)).to eq '1e00'
+      it 'accepts :word or dw' do
+        expect(hex_string(0xfd, width: :word)).to eq 'fdff'
       end
 
-      it 'fails informatively when passed a bit_width and a hex_width' do
+      it 'fails informatively when passed an unknown width' do
         expect {
-          hex_string(0x1e, hex_width: 4, bit_width: 16)
-        }.to raise_error ArgumentError,
-                         /Pick either hex_width or bit_width not both/
+          hex_string(0x1e, width: :bad_name)
+        }.to raise_error Hex::UnknownWidthError,
+                         /No match for width type/
       end
     end
   end
