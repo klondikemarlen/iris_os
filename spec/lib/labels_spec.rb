@@ -54,6 +54,8 @@ describe WithLabels do
     end
   end
 
+  # consider making this define a proto-label?
+  # this would crash the assembler if no actual label was defined later.
   context 'when called before definition' do
     it 'fails informatively' do
       expect {
