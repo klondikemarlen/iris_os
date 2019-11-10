@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 require 'base_asm'
+require 'definable'
 require 'labels'
 
 WithLabels = Class.new do
   include BaseAsm
+  include Definable
   include Labels
 end
 
@@ -36,6 +38,16 @@ describe WithLabels do
         described_class.build do
           label :endless do
             endless
+          end
+        end
+      }.not_to raise_error
+    end
+
+    it 'can access the global context from within that block' do
+      expect {
+        described_class.build do
+          label :some_label do
+            db 'X'
           end
         end
       }.not_to raise_error

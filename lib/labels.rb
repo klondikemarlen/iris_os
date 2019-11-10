@@ -23,7 +23,6 @@ class Label
   attr_reader :value, :data, :context
 
   def initialize(value, context:)
-    binding.pry if value == :endless
     @value = value
     @context = context
   end
