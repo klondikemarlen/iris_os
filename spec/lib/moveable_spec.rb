@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
 require 'base_asm'
+require 'definable'
+require 'labels'
 require 'moveable'
 
 WithMoveable = Class.new do
   include BaseAsm
+  include Definable
+  include Labels
   include Moveable
 end
 
@@ -12,12 +16,23 @@ describe Moveable do
   subject(:with_moveable) { WithMoveable.new }
 
   context '#mov' do
-    # MOV r8 imm8 - B0+r
-    it 'works for an 8-bit register and an 8-bit hex literal' do
-      with_moveable.build do
-        mov ah, 0x0e
+    context 'when given an 8-bit register' do
+      # MOV r8 imm8 - B0+r
+      it 'works for an 8-bit hex literal' do
+        with_moveable.build do
+          mov ah, 0x0e
+        end
+        expect(with_moveable.buffer).to eq 'b40e'
       end
-      expect(with_moveable.buffer).to eq 'b40e'
+
+      it 'works for an 8-bit memory address' do
+        with_moveable.build do
+          label :the_secret do
+            db 'X'
+          end
+          mov al, [the_secret]
+        end
+      end
     end
   end
 end
