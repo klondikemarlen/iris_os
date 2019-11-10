@@ -32,7 +32,7 @@ class Jump
   end
 
   def to_s
-    primary_opcode + hex_string(address)
+    primary_opcode + hex_string(address, width: :word)
   end
 
   def primary_opcode
@@ -62,7 +62,7 @@ class Jump
     when '$'
       jump_forever
     when Label
-      jump_to_location(target.offset)
+      jump_to_negative_relative_offset(target.offset)
     else
       raise UnknownAddressError, "Unknown address for #{target} target."
     end
@@ -70,18 +70,12 @@ class Jump
 
   # In 16 bit real mode: 0xffff AND NOT 0x2
   def jump_forever
-    jump_to_location(current_assembly_position)
+    jump_to_negative_relative_offset(current_assembly_position)
   end
 
-  def jump_to_location(target)
-    negative_padded_relative_offset(
-      (current_assembly_position + primary_opcode.length) - target
-    )
-  end
-
-  def negative_padded_relative_offset(relative_offset)
-    negative_offset_in_twos_comp = ~relative_offset
-    pad_for_negative_twos_comp & negative_offset_in_twos_comp
+  def jump_to_negative_relative_offset(target)
+    relative_offset = current_assembly_position + primary_opcode.length - target
+    ~relative_offset
   end
 
   ##
