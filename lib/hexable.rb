@@ -3,21 +3,17 @@
 class Hex
   attr_reader :hex_string
 
-  def initialize(object)
+  def initialize(object, bit_width: nil, hex_width: nil)
     raise ArgumentError, 'No nil can become hex!' if object.nil?
+    raise ArgumentError, 'Pick either hex_width or bit_width not both' \
+      unless hex_width.nil? || bit_width.nil?
 
-    case object
-    when Integer
-      @hex_string = object.to_s(16)
-    when String
-      @hex_string = cast_to_ord(object)
-    else
-      raise ArgumentError, "No values of type #{object.class}."
-    end
+    @hex_width = hex_width || (bit_width && bit_width / 4)
+    @hex_string = parse_object(object).downcase
   end
 
   def to_s
-    displacement hex_string.downcase.rjust(pad_size, '0')
+    displacement hex_string.rjust(pad_size, pad_char)
   end
 
   #######
@@ -32,7 +28,24 @@ class Hex
   end
 
   def pad_size
+    return @hex_width if @hex_width
+
     hex_string.length + hex_string.length % 2
+  end
+
+  def pad_char
+    hex_string.start_with?('f') ? 'f' : '0'
+  end
+
+  def parse_object(object)
+    case object
+    when Integer
+      @hex_string = object.to_s(16)
+    when String
+      @hex_string = cast_to_ord(object)
+    else
+      raise ArgumentError, "No values of type #{object.class}."
+    end
   end
 
   # low byte, high byte
@@ -44,7 +57,7 @@ class Hex
 end
 
 module Hexable
-  def hex_string(value)
-    Hex.new(value).to_s
+  def hex_string(value, bit_width: nil, hex_width: nil)
+    Hex.new(value, bit_width: bit_width, hex_width: hex_width).to_s
   end
 end
