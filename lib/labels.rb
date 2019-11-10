@@ -4,35 +4,37 @@ require 'base_error'
 require 'hexable'
 require 'immediates'
 
-=begin
-What is a label?
-it is just an overloaded Ruby `def` that returns a label object
-
-When used it can be an immediate of a specific width that
-matches the register it is being pushed into.
-
-Or
-It can be an address to a block of code?
-=end
+##
+# What is a label?
+# it is just an overloaded Ruby `def` that returns a label object
+#
+# When used it can be an immediate of a specific width that
+# matches the register it is being pushed into.
+#
+# Or
+#
+# A label is used to calculate the effective address of some data.
+# A label holds the relative offset from the start of the section.=end
+#
 class Label
   include Hexable
 
   class UndefinedLabelError < AsmError; end
   class AlreadyDefinedError < AsmError; end
 
-  attr_reader :value, :data, :context
+  attr_reader :offset, :data, :context
 
-  def initialize(value, context:)
-    @value = value
+  def initialize(offset, context:)
+    @offset = offset
     @context = context
   end
 
   def to_imm
-    Immediate.new(@value)
+    Immediate.new(offset)
   end
 
   def to_s
-    hex_string @value
+    hex_string offset
   end
 end
 

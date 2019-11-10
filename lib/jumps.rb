@@ -62,7 +62,7 @@ class Jump
     when '$'
       jump_forever
     when Label
-      jump_to_location(target.value)
+      jump_to_location(target.offset)
     else
       raise UnknownAddressError, "Unknown address for #{target} target."
     end

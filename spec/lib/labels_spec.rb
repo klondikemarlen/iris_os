@@ -28,7 +28,7 @@ describe WithLabels do
     end
 
     it 'references build point it was defined at' do
-      expect(asm.foo.value).to eq 4
+      expect(asm.foo.offset).to eq 4
     end
   end
 
