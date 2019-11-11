@@ -38,8 +38,7 @@ class Instruction
   # Perhaps a better technique would be to fix the tests ...
   def initialize(mnemonic, *operators, fast_fail: true)
     @name = mnemonic
-    @operators = operators
-    define_opx_for_each_operator
+    self.operators = operators
     @type = determine_type if fast_fail
   end
 
@@ -78,17 +77,19 @@ class Instruction
     local_type
   end
 
-  def define_opx_for_each_operator
-    operators.each.with_index(1) do |op, i|
-      define_singleton_method("op#{i}".intern) { cast_to_assembly_types(op) }
-    end
-  end
-
   def immediate_equivalent?(operator)
     [Integer, String].any? { |klass| operator.is_a?(klass) }
   end
 
   def no_cast_needed?(operator)
     [Register, Immediate].any? { |klass| operator.is_a?(klass) }
+  end
+
+  def operators=(ops)
+    @operators = ops
+
+    operators.each.with_index(1) do |op, i|
+      define_singleton_method("op#{i}".intern) { cast_to_assembly_types(op) }
+    end
   end
 end
