@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-file = ARGV[0] || 'scratchpad'
+file = ARGV[0] || 'now'
 
 `nasm #{file}.asm -f bin -o tmp/#{file}.bin`
 puts
