@@ -43,9 +43,8 @@ module Labels
   # basically an overloaded Ruby `def` statement
   # that returns a label object
   def label(symbol, &block)
-    # I'm not sure if I should disallow label reuse or not ...
-    # raise(Label::AlreadyDefinedError, "Label `:#{symbol}` already exists.") \
-    #   if respond_to?(symbol)
+    raise(Label::AlreadyDefinedError, "Label #{symbol} already exists.") \
+      if respond_to?(symbol)
 
     label = Label.new(cursor, context: block&.binding || binding)
 

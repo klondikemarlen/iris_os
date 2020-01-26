@@ -77,5 +77,18 @@ describe WithLabels do
       }.to raise_error NameError, /undefined local variable or method/
     end
   end
-end
 
+  context 'when label defined a second time' do
+    it 'fails informatively' do
+      expect {
+        described_class.build do
+          label :duplicate_label_definition
+          label :duplicate_label_definition
+        end
+      }.to raise_error(
+        Label::AlreadyDefinedError,
+        /Label duplicate_label_definition already exists./
+      )
+    end
+  end
+end
