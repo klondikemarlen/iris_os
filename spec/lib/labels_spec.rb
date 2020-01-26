@@ -33,6 +33,14 @@ describe WithLabels do
   end
 
   context 'when passed a block' do
+    let(:asm) do
+      described_class.build do
+        label :some_label do
+          db 'X'
+        end
+      end
+    end
+
     it 'can refer to itself within that block' do
       expect {
         described_class.build do
@@ -51,6 +59,10 @@ describe WithLabels do
           end
         end
       }.not_to raise_error
+    end
+
+    it 'maintains the offset it had during definition' do
+      expect(asm.some_label.offset).to eq 0
     end
   end
 

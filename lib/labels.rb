@@ -47,8 +47,10 @@ module Labels
     # raise(Label::AlreadyDefinedError, "Label `:#{symbol}` already exists.") \
     #   if respond_to?(symbol)
 
+    label = Label.new(cursor, context: block&.binding || binding)
+
     define_singleton_method(symbol) do
-      Label.new(cursor, context: binding)
+      label
     end
 
     instance_eval(&block) if block_given?
