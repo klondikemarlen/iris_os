@@ -69,13 +69,25 @@ describe WithLabels do
   # consider making this define a proto-label?
   # this would crash the assembler if no actual label was defined later.
   context 'when called before definition' do
-    it 'fails informatively' do
-      expect {
-        described_class.build do
-          non_existent_label
-        end
-      }.to raise_error NameError, /undefined local variable or method/
+    # let(:asm) do
+    #   described_class.build do
+    #     lazy_defined_label
+    #     label :lazy_defined_label
+    #   end
+    # end
+
+    # it 'lazy evaluates' do
+    #   expect { asm }.not_to raise_error
+    # end
+
+    context 'when not defined at all' do
+      it 'fails informatively' do
+        expect {
+          described_class.build do
+            non_existent_label
+          end
+        }.to raise_error NameError, /undefined local variable or method/
+      end
     end
   end
 end
-

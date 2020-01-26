@@ -3,6 +3,9 @@
 require 'base_error'
 require 'hexable'
 require 'immediates'
+require 'refinements/naming'
+
+using Refinements::Naming
 
 ##
 # What is a label?
@@ -47,6 +50,7 @@ module Labels
     # raise(Label::AlreadyDefinedError, "Label `:#{symbol}` already exists.") \
     #   if respond_to?(symbol)
 
+    # mod = Object.const_set(symbol.classify, Module.new)
     label = Label.new(cursor, context: block&.binding || binding)
 
     define_singleton_method(symbol) do
@@ -56,4 +60,33 @@ module Labels
     instance_eval(&block) if block_given?
     public_send(symbol)
   end
+
+  # attr_reader :callbacks
+
+  # def initialize(*args, **kwargs)
+  #   super(*args, **kwargs)
+
+  #   @callbacks = []
+  # end
+
+  # def method_missing(method, *args, &block)
+  #   callbacks << [method, args, block]
+  # end
+
+  # def respond_to_missing?(method, inclued_private = false)
+
+  # end
+
+  # def resolve_callbacks
+  #   callbacks.each do |callback|
+  #     method, args, block = callback
+  #     send(method, *args, &block)
+  #   end
+  # end
+
+  # def build(&block)
+  #   super(&block)
+
+  #   resolve_callbacks
+  # end
 end
