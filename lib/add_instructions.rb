@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'base_error'
-require 'hexable'
 require 'immediates'
 require 'registers'
 
@@ -23,10 +22,6 @@ class AddInstuction
   class UnknownPrimaryOpCodeError < AddInstructionError; end
   class OperandParseError < AddInstructionError; end
 
-  include Hexable
-
-  attr_reader :operand1, :operand2
-
   class << self
     def parse(operand)
       return Immediate.new(operand) if immediate_equivalent?(operand)
@@ -38,6 +33,8 @@ class AddInstuction
       [Integer, String].any? { |klass| operand.is_a?(klass) }
     end
   end
+
+  attr_reader :operand1, :operand2
 
   def initialize(operand1, operand2)
     @operand1 = operand1
