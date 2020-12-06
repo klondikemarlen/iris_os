@@ -89,6 +89,12 @@ class Hex
 end
 
 module Hexable
+  refine Integer do
+    def to_s(width = nil)
+      Hex.new(self, width: width).to_s
+    end
+  end
+
   def hex_string(value, width: nil)
     Hex.new(value, width: width).to_s
   end

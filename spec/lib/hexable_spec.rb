@@ -55,4 +55,20 @@ describe Hexable do
       end
     end
   end
+
+  context 'when using Hexable Integer refinement' do
+    using described_class
+
+    it 'prints integers as hex strings' do
+      expect(0xc3.to_s).to eq('c3')
+    end
+
+    it 'prints integers as hex strings' do
+      expect(195.to_s).to eq('c3')
+    end
+
+    it 'still allows inspecting of integers' do
+      expect(0xb3.inspect).to eq('179')
+    end
+  end
 end
