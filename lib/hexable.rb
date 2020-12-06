@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'base_error'
+require_relative 'asm_error'
 
 class Hex
   class UnknownWidthError < AsmError; end

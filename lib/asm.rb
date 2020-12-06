@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'asm_codes'
+require_relative 'add_instructions'
 require_relative 'base_asm'
 require_relative 'definable'
 require_relative 'hex_file'
@@ -16,6 +17,7 @@ require_relative 'registers'
 # and make it update the cursor position.
 
 class Asm
+  include AddInstructions
   include BaseAsm
   include Definable
   include Hexable

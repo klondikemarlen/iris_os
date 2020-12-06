@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'base_error'
-require 'hexable'
-require 'immediates'
+require_relative 'asm_error'
+require_relative 'hexable'
+require_relative 'immediates'
 
 ##
 # What is a label?

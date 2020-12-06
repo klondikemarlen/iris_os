@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './lib/asm'
+require_relative 'lib/asm'
 
 BOOT_SECT = Asm.build do
   mov ah, 0x0e

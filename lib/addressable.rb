@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'base_error'
-require 'hexable'
+require_relative 'asm_error'
+require_relative 'hexable'
 
 class Address
   include Hexable

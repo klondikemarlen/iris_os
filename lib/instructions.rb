@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'immediates'
-require 'operators'
-require 'registers'
-require 'labels'
+require_relative 'immediates'
+require_relative 'operators'
+require_relative 'registers'
+require_relative 'labels'
 
 module Instructions
   module Ops

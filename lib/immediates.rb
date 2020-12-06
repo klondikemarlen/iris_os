@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'hexable'
+require_relative 'hexable'
 
 # Considering merging hexable and immediate ...
 class Immediate
