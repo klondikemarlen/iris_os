@@ -1,14 +1,17 @@
-Style/Documentation:
+Layout/EmptyLinesAroundAccessModifier:
   Enabled: false
 
 Lint/Debugger:
   Enabled: false
 
-Layout/EmptyLinesAroundAccessModifier:
+Metrics/LineLength:
+  Max: 88
+
+Style/BlockComments:
   Enabled: false
 
 Style/BlockDelimiters:
   EnforcedStyle: braces_for_chaining
 
-Style/BlockComments:
+Style/Documentation:
   Enabled: false
