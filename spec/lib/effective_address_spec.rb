@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
-require 'addressable'
+require 'effective_address'
 require 'labels'
 
-describe Address do
-  subject(:address) { described_class.new(*operations, width: :word) }
+describe EffectiveAddress do
+  subject(:address) { described_class.new(operand) }
 
   context 'when given a label' do
     let(:label) { Label.new 30, context: nil }
-    let(:operations) { [label] }
+    let(:operand) { [label] }
+
     it 'returns the effective address of data at that label' do
       expect(address.to_s).to eq '1e00'
     end
