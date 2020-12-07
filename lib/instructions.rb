@@ -5,6 +5,14 @@ require_relative 'operators'
 require_relative 'registers'
 require_relative 'labels'
 
+warn <<~WARNING
+  DEPRECATION WARNING: the file Instructions.rb is deprecated.
+  This concept just instead ready to be generalized yet.
+  Currently I'm using per instruction parsing an two examples are:
+    - lib/add_instructions.rb
+    - lib/move_instructions.rb
+WARNING
+
 module Instructions
   module Ops
     include Operators::Types
@@ -65,8 +73,10 @@ class Instruction
   def determine_type
     local_type = nil
     Instructions.each do |label, matcher|
-      local_type = matcher.call(self) && label.downcase
-      break unless local_type.nil?
+      next unless matcher.call(self)
+
+      local_type = label.downcase
+      break
     end
 
     unless local_type
