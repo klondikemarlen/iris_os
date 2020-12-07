@@ -76,7 +76,7 @@ class AddInstuction
   end
 end
 
-module AddInstuctions
+module AddInstructions
   include Registers
 
   # add bx, 0x7c00 -> bx = bx + 0x7c00 -> 81 c3 00 7c

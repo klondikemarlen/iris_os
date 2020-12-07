@@ -27,13 +27,13 @@ describe AddInstuction do
   end
 end
 
-describe AddInstuctions do
+describe AddInstructions do
   subject(:assembler) { with_add_instuctions.new }
 
   let(:with_add_instuctions) do
     Class.new do
       include BaseAsm
-      include AddInstuctions
+      include AddInstructions
     end
   end
 
