@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'base_error'
+require 'asm_error'
 require 'immediates'
 require 'registers'
 
