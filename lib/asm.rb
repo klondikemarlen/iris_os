@@ -9,7 +9,7 @@ require_relative 'hexable'
 require_relative 'interrupts'
 require_relative 'jumps'
 require_relative 'labels'
-require_relative 'moveable'
+require_relative 'move_instructions'
 require_relative 'paddable'
 require_relative 'registers'
 
@@ -24,7 +24,7 @@ class Asm
   include Interrupts
   include Jumps
   include Labels
-  include Moveable
+  include MoveInstructions
   include Paddable
   include Registers
 end
