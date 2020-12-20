@@ -72,9 +72,9 @@ class Hex
   def symolic_width_to_hex_size(width)
     return nil if width.nil?
 
-    if %i[byte db].include?(width)
+    if width == 8 || %i[byte db].include?(width)
       2
-    elsif %i[word dw].include?(width)
+    elsif width == 16 || %i[word dw].include?(width)
       4
     else
       raise UnknownWidthError, "No match for width type #{width.inspect}."

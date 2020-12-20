@@ -31,7 +31,7 @@ describe Hexable do
     end
 
     it 'raise an error on nil' do
-      expect { hex_string(nil) } .to raise_error Hex::NoNilError
+      expect { hex_string(nil) }.to raise_error Hex::NoNilError
     end
 
     context 'when padding to a specific width' do
@@ -52,6 +52,12 @@ describe Hexable do
           hex_string(0x1e, width: :bad_name)
         }.to raise_error Hex::UnknownWidthError,
                          /No match for width type/
+      end
+    end
+
+    context 'when given a bit width as a number of bits' do
+      it 'padds correctly' do
+        expect(hex_string(0x1e, width: 16)).to eq '1e00'
       end
     end
   end
