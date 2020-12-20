@@ -8,8 +8,10 @@ require_relative 'registers'
 
 class MoveInstruction
   module InstructionOperands
+    IMMEDIATE = ->(operand) { operand.is_a?(Immediate) }
+
     REGISTER_8_BIT = ->(operand) { operand.is_a?(Register) && operand.width == 8 }
-    IMMEDIATE_8_BIT = ->(operand) { operand.is_a?(Immediate) && operand.width == 8 }
+    REGISTER_16_BIT = ->(operand) { operand.is_a?(Register) && operand.width == 16 }
 
     REGISTER_AL = ->(operand) { operand.is_a?(Register) && operand.name == :al }
     MEMORY_OFFSET_8_BIT = lambda do |operand|
@@ -18,10 +20,16 @@ class MoveInstruction
   end
 
   module InstructionCombinations
-    REGISTER_8_BIT_AND_IMMEDIATE_8_BIT = lambda do |ctx|
-      return false unless InstructionOperands::IMMEDIATE_8_BIT.call ctx.operand2
+    REGISTER_8_BIT_AND_IMMEDIATE = lambda do |ctx|
+      return false unless InstructionOperands::IMMEDIATE.call ctx.operand2
 
       InstructionOperands::REGISTER_8_BIT.call ctx.operand1
+    end
+
+    REGISTER_16_BIT_AND_IMMEDIATE = lambda do |ctx|
+      return false unless InstructionOperands::IMMEDIATE.call ctx.operand2
+
+      InstructionOperands::REGISTER_16_BIT.call ctx.operand1
     end
 
     # MOV AL, moffs8
@@ -49,7 +57,7 @@ class MoveInstruction
   class MoveInstructionError < AsmError; end
   class UnknownPrimaryOpCodeError < MoveInstructionError; end
 
-  using Hexable
+  include Hexable
 
   attr_reader :operand1, :operand2
 
@@ -63,17 +71,24 @@ class MoveInstruction
       case self
       when InstructionCombinations::REGISTER_AL_MEMORY_OFFSET_8_BIT
         0xA0
-      when InstructionCombinations::REGISTER_8_BIT_AND_IMMEDIATE_8_BIT
+      when InstructionCombinations::REGISTER_8_BIT_AND_IMMEDIATE
         register = operand1
         0xb0 + register.extension
+      when InstructionCombinations::REGISTER_16_BIT_AND_IMMEDIATE
+        register = operand1
+        0xb8 + register.extension
       else
         raise UnknownPrimaryOpCodeError,
-              "Can't determine primary opcode given #{operand1}, #{operand2}."
+              "Can't determine primary opcode given #{operand1.inspect}, #{operand2.inspect}."
       end
   end
 
   def to_s
-    "#{primary_opcode}#{operand2}"
+    primary_opcode_as_hex = hex_string(primary_opcode)
+    return "#{primary_opcode_as_hex}#{operand2}" if operand1.width == operand2.width
+
+    operand2_as_padded_hex = hex_string(operand2.value, width: operand1.width)
+    "#{primary_opcode_as_hex}#{operand2_as_padded_hex}"
   end
 end
 

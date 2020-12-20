@@ -7,31 +7,46 @@ require 'move_instructions'
 
 describe MoveInstruction do
   subject(:move_instruction) { described_class.new destination, source }
-  let(:destination) { Register.new(:al) }
 
   describe '#to_s' do
-    context 'when given an 8 bit register and an 8 bit immediate' do
-      let(:source) { Immediate.new('H') }
+    context 'when given an 8 bit register' do
+      let(:destination) { Register.new(:al) }
 
-      it 'returns the correct hexadecimal as a string' do
-        expect(move_instruction.to_s).to eq 'b048'
+      context 'with an immediate' do
+        let(:source) { Immediate.new('H') }
+
+        it 'returns the correct hexadecimal as a string' do
+          expect(move_instruction.to_s).to eq 'b048'
+        end
+      end
+
+      context 'with an 8 bit immediate' do
+        let(:source) { Immediate.new(5) }
+
+        it 'returns the correct hexadecimal as a string' do
+          expect(move_instruction.to_s).to eq 'b005'
+        end
+      end
+
+      context 'with an 8 bit address' do
+        let(:label) { Label.new(5, context: {}) }
+        let(:source) { EffectiveAddress.new(label) }
+
+        it 'returns the correct hexadecimal as a string' do
+          expect(move_instruction.to_s).to eq 'a00500'
+        end
       end
     end
 
-    context 'when given an 8 bit register and an 8 bit immediate' do
-      let(:source) { Immediate.new(5) }
+    context 'when given a 16 bit register' do
+      let(:destination) { Register.new(:bx) }
 
-      it 'returns the correct hexadecimal as a string' do
-        expect(move_instruction.to_s).to eq 'b005'
-      end
-    end
+      context 'with an immediate' do
+        let(:source) { Immediate.new(0x1e) }
 
-    context 'when give an 8 bit register an 8 bit address' do
-      let(:label) { Label.new(5, context: {}) }
-      let(:source) { EffectiveAddress.new(label) }
-
-      it 'returns the correct hexadecimal as a string' do
-        expect(move_instruction.to_s).to eq 'a00500'
+        it 'returns the correct hexadecimal as a string' do
+          expect(move_instruction.to_s).to eq 'bb1e00'
+        end
       end
     end
   end
@@ -94,6 +109,18 @@ describe MoveInstructions do
           mov al, [the_secret]
         end
         expect(assembler.buffer).to end_with 'a00000'
+      end
+
+      it 'works with a direct label' do
+        assembler.build do
+          label :the_secret do
+            db 'X'
+          end
+
+          mov bx, the_secret
+        end
+
+        expect(assembler.buffer).to end_with 'bb0000'
       end
     end
   end
